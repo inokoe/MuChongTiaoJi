@@ -1,0 +1,28 @@
+name: 'Muchong'
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+env:
+    token: ${{secrets.token}}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install
+        run: pip install requests python-telegram-bot my_fake_useragent pyTelegramBotAPI  requests_toolbelt html-telegraph-poster bs4
+      - name: Run Python
+        run: python main.py
+      - name: Commit files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Action Commit
+          push_options: --force
