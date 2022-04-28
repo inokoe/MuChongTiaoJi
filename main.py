@@ -4,6 +4,7 @@ from my_fake_useragent import UserAgent
 import telebot
 import requests
 from bs4 import BeautifulSoup
+import os
 
 ua = UserAgent(family='safari')
 headers = {
@@ -36,8 +37,9 @@ def check_data_size(data):
 
 
 # Set TG bot
+
 chat_id = "@muchongtiaoji"  # 频道地址
-token = "5309926080:AAFpffXscobEyGqE6IvUYUqA3fs_lnQP4w8"  # 机器人 TOKEN
+token = os.environ["token"]  # 机器人 TOKEN
 bot = telebot.TeleBot(token)
 
 f = open('MuchongSaved.txt', 'r', encoding='utf-8')
