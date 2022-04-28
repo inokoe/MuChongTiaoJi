@@ -69,16 +69,20 @@ for x in soup:
         print(content)
         flag = 1
         timer = 0
-        while flag:
-            timer += 1
-            try:
-                bot.send_message(chat_id=chat_id, text=content, parse_mode='HTML')
-                break
-            except:
-                print('this one failure , try sleep')
-                time.sleep(60*timer)
-            if timer > 4:
-                flag = 0
+        try:
+            bot.send_message(chat_id=chat_id, text=content, parse_mode='HTML')
+        except:
+            print('this one failure')
+        # while flag:
+        #     timer += 1
+        #     try:
+        #         bot.send_message(chat_id=chat_id, text=content, parse_mode='HTML')
+        #         break
+        #     except:
+        #         print('this one failure , try sleep')
+        #         time.sleep(60*timer)
+        #     if timer > 4:
+        #         flag = 0
     else:
         print('!!  Repeat  !!')
 
