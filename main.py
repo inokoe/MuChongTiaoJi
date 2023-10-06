@@ -30,6 +30,7 @@ def md5(value):
     return m.hexdigest()
 
 
+# 当txt文件中的md5值数量，超过限制后进行清除
 def check_data_size(data):
     if data.count(',') > 260000:
         return 'start,'
@@ -54,11 +55,8 @@ soup = soup.findAll(name='a', attrs={"class": "a_subject"})
 sub_url = 'http://muchong.com/'
 for x in soup:
     url = sub_url + x['href']
-    # if x.text.find('水产')>-1 or x.text.find('凝固')>-1 or x.text.find('经济学')>-1 or x.text.find('化工')>-1 or x.text.find('石油')>-1 or x.text.find('天然气')>-1 or x.text.find('力学')>-1 or x.text.find('韩国')>-1 or x.text.find('香港')>-1 or x.text.find('科学')>-1 or x.text.find('生命')>-1 or x.text.find('环境')>-1 or x.text.find('生态')>-1 or x.text.find('中药')>-1 or x.text.find('遗传')>-1 or x.text.find('西京')>-1 or x.text.find('土木')>-1 or x.text.find('轻工技术')>-1 or x.text.find('工商管理')>-1 or x.text.find('纤维')>-1 or x.text.find('纳米')>-1 or x.text.find('生物')>-1 or x.text.find('化学')>-1 or x.text.find('材料')>-1 or x.text.find('细胞')>-1 or x.text.find('农学')>-1 or x.text.find('物理')>-1 :
-    #     old_data += md5(str(url).encode('utf-8'))+','
-    #     print('！！排除！！')
-    #     continue
     content = ''
+    # 当某条信息未被抓取时，组装HTML用于发送到telegram channel
     if old_data.find(md5(str(url).encode('utf-8'))) == -1:
         old_data += md5(str(url).encode('utf-8')) + ','
         content = "<a href='"
@@ -72,19 +70,7 @@ for x in soup:
         try:
             bot.send_message(chat_id=chat_id, text=content, parse_mode='HTML')
         except:
-            print('this one failure')
-        # while flag:
-        #     timer += 1
-        #     try:
-        #         bot.send_message(chat_id=chat_id, text=content, parse_mode='HTML')
-        #         break
-        #     except:
-        #         print('this one failure , try sleep')
-        #         time.sleep(60*timer)
-        #     if timer > 4:
-        #         flag = 0
-    else:
-        print('!!  Repeat  !!')
+            print('Try transfer data to telegram channel but failure.')
 
 f = open('MuchongSaved.txt', 'w', encoding='utf-8')
 f.write(old_data)
