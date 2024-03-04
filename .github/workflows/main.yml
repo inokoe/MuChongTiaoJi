@@ -20,7 +20,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install
-        run: pip install requests python-telegram-bot my_fake_useragent pyTelegramBotAPI  requests_toolbelt html-telegraph-poster bs4
+        run: pip install -r requirements.txt
       - name: Run Python
         run: python main.py
       - name: Commit files
