@@ -5,7 +5,7 @@ on:
   #     - main
   workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/10 * * * *'
 env:
     token: ${{secrets.token}}
 jobs:
