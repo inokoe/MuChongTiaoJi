@@ -1,0 +1,39 @@
+# 忽略 node_modules 目录
+# Ignore node_modules directory
+node_modules/
+
+# 忽略日志文件
+# Ignore log files
+*.log
+
+# 忽略依赖锁文件
+# Ignore dependency lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 忽略环境变量文件
+# Ignore environment variable files
+.env
+.env.*
+
+# 忽略构建输出目录
+# Ignore build output directories
+dist/
+build/
+
+# 忽略操作系统生成的文件
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# 忽略测试覆盖率文件
+# Ignore test coverage files
+coverage/
+
+# 忽略临时文件
+# Ignore temp files
+*.tmp
+*.swp 
+
+.DS_Store

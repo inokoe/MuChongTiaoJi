@@ -1,0 +1,403 @@
+.container {
+  width: 100%;
+  min-height: 80vh;
+  scroll-behavior: smooth; /* Enable smooth scrolling / 启用平滑滚动 */
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.headerTitle {
+  color: #2c3e50 !important;
+  margin: 0 !important;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.headerTitle :global(.anticon) {
+  color: #1890ff;
+}
+
+.stats {
+  background: rgba(24, 144, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #1890ff;
+  font-size: 0.875rem;
+}
+
+.filters {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.searchInput :global(.ant-input-search) {
+  border-radius: 12px;
+}
+
+.searchInput :global(.ant-input) {
+  border-radius: 12px 0 0 12px;
+  border-right: none;
+  font-size: 1rem;
+}
+
+.searchInput :global(.ant-input-search-button) {
+  border-radius: 0 12px 12px 0;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.filterSelect {
+  width: 100%;
+}
+
+.filterSelect :global(.ant-select-selector) {
+  border-radius: 12px;
+  font-size: 1rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.resetButton {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 40px;
+  min-width: 100px;
+}
+
+.resetButton:hover {
+  background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.content {
+  margin-top: 2rem;
+  /* Prevent layout shift during loading / 加载期间防止布局偏移 */
+  min-height: 400px;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.content.loading {
+  opacity: 0.7;
+  transform: translateY(10px);
+}
+
+/* Transition state for smooth pagination changes / 用于平滑分页变化的过渡状态 */
+.content.transitioning {
+  opacity: 0.95;
+  pointer-events: none; /* Prevent interactions during transition / 过渡期间防止交互 */
+}
+
+/* Cards container with optimized rendering / 优化渲染的卡片容器 */
+.cardsContainer {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.content.transitioning .cardsContainer {
+  transform: translateY(5px);
+  opacity: 0.8;
+}
+
+/* Enhanced card transitions / 增强的卡片过渡效果 */
+:global(.ant-row) {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:global(.ant-col) {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimize card rendering performance / 优化卡片渲染性能 */
+:global(.ant-card) {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.empty {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.empty :global(.ant-empty-description) {
+  color: #7f8c8d;
+  font-size: 1.125rem;
+}
+
+/* Loading spinner styles */
+/* 加载动画样式 */
+:global(.ant-spin-container) {
+  min-height: 200px;
+  transition: all 0.3s ease;
+}
+
+:global(.ant-spin-spinning) {
+  position: relative;
+}
+
+:global(.ant-spin-spinning::after) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+:global(.ant-spin-lg .ant-spin-dot) {
+  font-size: 32px;
+}
+
+:global(.ant-spin-lg .ant-spin-dot i) {
+  background-color: #1890ff;
+}
+
+/* Pagination styles / 分页样式 */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  /* Smooth transitions for pagination container / 分页容器的平滑过渡 */
+  transition: all 0.3s ease;
+}
+
+.paginationContainer:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.pagination {
+  /* Override Ant Design pagination styles */
+  /* 覆盖 Ant Design 分页样式 */
+}
+
+.pagination :global(.ant-pagination-item) {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  margin: 0 4px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth cubic-bezier transition / 平滑的贝塞尔曲线过渡 */
+  position: relative;
+  overflow: hidden;
+}
+
+.pagination :global(.ant-pagination-item::before) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.pagination :global(.ant-pagination-item:hover::before) {
+  left: 100%;
+}
+
+.pagination :global(.ant-pagination-item:hover) {
+  border-color: #1890ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.2);
+}
+
+.pagination :global(.ant-pagination-item:active) {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+.pagination :global(.ant-pagination-item-active) {
+  background: linear-gradient(135deg, #1890ff, #40a9ff);
+  border-color: #1890ff;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.pagination :global(.ant-pagination-item-active a) {
+  color: #fff;
+  font-weight: 600;
+}
+
+.pagination :global(.ant-pagination-prev),
+.pagination :global(.ant-pagination-next) {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pagination :global(.ant-pagination-prev:hover),
+.pagination :global(.ant-pagination-next:hover) {
+  border-color: #1890ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.2);
+}
+
+.pagination :global(.ant-pagination-prev:active),
+.pagination :global(.ant-pagination-next:active) {
+  transform: translateY(0);
+}
+
+.pagination :global(.ant-pagination-jump-prev),
+.pagination :global(.ant-pagination-jump-next) {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.pagination :global(.ant-pagination-jump-prev:hover),
+.pagination :global(.ant-pagination-jump-next:hover) {
+  transform: translateY(-2px) scale(1.1);
+  color: #1890ff;
+}
+
+.pagination :global(.ant-pagination-options-size-changer) {
+  margin-right: 16px;
+}
+
+.pagination :global(.ant-select-selector) {
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.2s ease;
+}
+
+.pagination :global(.ant-select-selector:hover) {
+  border-color: #1890ff;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.2);
+}
+
+.pagination :global(.ant-pagination-total-text) {
+  color: #666;
+  font-weight: 500;
+  margin-right: 16px;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .headerTitle {
+    font-size: 1.5rem;
+  }
+
+  .stats {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .filters {
+    padding: 1rem;
+  }
+
+  .resetButton {
+    width: 100%;
+  }
+
+  .paginationContainer {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .pagination :global(.ant-pagination-options) {
+    display: none;
+  }
+
+  .pagination :global(.ant-pagination-total-text) {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .filters {
+    margin-bottom: 1rem;
+  }
+
+  .pagination :global(.ant-pagination-jump-prev),
+  .pagination :global(.ant-pagination-jump-next) {
+    display: none;
+  }
+
+  .pagination :global(.ant-pagination-item) {
+    margin: 0 2px;
+    min-width: 28px;
+    height: 28px;
+    line-height: 26px;
+    font-size: 12px;
+  }
+
+  .pagination :global(.ant-pagination-prev),
+  .pagination :global(.ant-pagination-next) {
+    min-width: 28px;
+    height: 28px;
+    line-height: 26px;
+  }
+}

@@ -1,0 +1,123 @@
+/**
+ * Global styles and Ant Design customization
+ * 全局样式和 Ant Design 自定义
+ */
+
+/* Global reset / 全局重置 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segue UI Emoji', 'Segue UI Symbol';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Ant Design component customization / Ant Design 组件自定义 */
+.ant-layout {
+  background: transparent;
+}
+
+.ant-layout-content {
+  background: transparent;
+}
+
+.ant-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ant-btn-primary {
+  background: linear-gradient(90deg, #6a8dff 0%, #a084ee 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(106, 141, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(90deg, #5a7dff 0%, #8a6eea 100%);
+  box-shadow: 0 4px 16px rgba(106, 141, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+  color: #262626;
+  font-weight: 600;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: #f8f9ff;
+}
+
+.ant-progress-bg {
+  background: linear-gradient(90deg, #6a8dff 0%, #a084ee 100%);
+}
+
+.ant-statistic-content {
+  font-weight: 600;
+}
+
+/* Custom scrollbar / 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Animation keyframes / 动画关键帧 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Responsive utilities / 响应式工具类 */
+@media (max-width: 768px) {
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .ant-card {
+    margin-bottom: 16px;
+  }
+
+  .ant-statistic {
+    text-align: center;
+  }
+}

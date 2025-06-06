@@ -1,0 +1,124 @@
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.tagContainer {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.typeTag {
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.statusTag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+.date {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.title {
+  color: #2c3e50 !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(240, 248, 255, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(24, 144, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.infoItem:hover {
+  background: rgba(240, 248, 255, 1);
+  border-color: rgba(24, 144, 255, 0.2);
+}
+
+.icon {
+  color: #1890ff;
+  font-size: 1.125rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.content {
+  margin-top: 1rem;
+}
+
+.contentText {
+  background: rgba(248, 249, 250, 0.8);
+  padding: 1rem;
+  border-radius: 12px;
+  border-left: 4px solid #1890ff;
+  line-height: 1.6;
+  margin: 0 !important;
+}
+
+.contact {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 245, 230, 0.8);
+  border-radius: 8px;
+  border: 1px solid rgba(250, 173, 20, 0.2);
+}
+
+@media (max-width: 768px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .tagContainer {
+    width: 100%;
+  }
+
+  .date {
+    align-self: flex-end;
+  }
+}

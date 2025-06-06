@@ -1,0 +1,54 @@
+name: Auto Crawler Data Update
+# 自动爬虫数据更新
+
+on:
+  schedule:
+    # Run 4 times per day: 00:00, 06:00, 12:00, 18:00 UTC
+    # 每天运行 4 次：北京时间 08:00, 14:00, 20:00, 02:00
+    - cron: "0 0,6,12,18 * * *"
+  workflow_dispatch:
+    # Allow manual trigger / 允许手动触发
+
+jobs:
+  crawler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        # 检出代码仓库
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.key }}
+
+      - name: Setup Node.js
+        # 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        # 安装项目依赖
+        run: npm install
+
+      - name: Run crawler to fetch new data
+        # 运行爬虫获取新数据
+        run: npm run dev
+
+      - name: Configure Git
+        # 配置 Git 用户信息
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Check for changes and commit
+        # 检查变更并提交新数据
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit / 没有需要提交的变更"
+          else
+            git commit -m "chore: update crawler data - $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "Successfully committed and pushed new data / 成功提交并推送新数据"
+          fi

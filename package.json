@@ -1,0 +1,38 @@
+{
+  "name": "muchongnodejs",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "npx ts-node src/crawler/index",
+    "build:web": "vite build",
+    "dev:web": "vite",
+    "format": "prettier --write \"src/**/*.{js,ts,tsx,json,css,md}\" \"web/**/*.{js,ts,tsx,json,css,md}\" \"*.{js,ts,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,ts,tsx,json,css,md}\" \"web/**/*.{js,ts,tsx,json,css,md}\" \"*.{js,ts,json,md}\""
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "Node.js web scraping project with TypeScript / 基于 TypeScript 的 Node.js 爬虫项目",
+  "dependencies": {
+    "@ant-design/icons": "^6.0.0",
+    "@imaginerlabs/user-agent-generator": "^1.0.1",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "antd": "^5.25.4",
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/node": "^22.10.2",
+    "@vitejs/plugin-react": "^4.5.1",
+    "postcss": "^8.5.4",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.3.5"
+  }
+}

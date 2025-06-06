@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    /* Language and Environment / 语言和环境 */
+    "target": "ES6",
+    "lib": ["dom", "esnext"],
+
+    /* Modules / 模块 */
+    "module": "commonjs",
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+
+    /* JavaScript Support / JavaScript 支持 */
+    "allowJs": true,
+    "checkJs": false,
+
+    /* Emit / 输出 */
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": false,
+
+    /* Interop Constraints / 互操作约束 */
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking / 类型检查 */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    /* Completeness / 完整性 */
+    "skipLibCheck": true,
+
+    /* React JSX Support / React JSX 支持 */
+    "jsx": "react-jsx",
+
+    /* No Emit / 不输出 */
+    "noEmit": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+}

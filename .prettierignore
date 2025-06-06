@@ -1,0 +1,29 @@
+# Dependencies / 依赖目录
+node_modules/
+dist/
+
+# Build output / 构建输出
+build/
+*.min.js
+*.min.css
+
+# Logs / 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package files / 包文件
+package-lock.json
+yarn.lock
+
+# Git / Git 相关
+.git/
+
+# IDE / 编辑器配置
+.vscode/
+.idea/
+
+# OS generated files / 系统生成文件
+.DS_Store
+Thumbs.db 
