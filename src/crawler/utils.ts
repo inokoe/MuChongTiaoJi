@@ -91,17 +91,25 @@ const fetchIndexUrl = async (): Promise<
       existing = [];
     }
   }
-  const all = [...results, ...existing];
+  // 将现有数据先放入 Map，实现增量添加 / Put existing data into Map first for incremental addition
   const dedupedMap = new Map<
     string,
     { tag: string; title: string; url: string; id: string; timestamp?: number }
   >();
-  for (const item of all) {
+
+  // 先添加现有数据 / Add existing data first
+  for (const item of existing) {
+    dedupedMap.set(item.id, item);
+  }
+
+  // 只添加不存在的新数据，跳过已存在的 ID / Only add new data that doesn't exist, skip existing IDs
+  for (const item of results) {
     if (!dedupedMap.has(item.id)) {
       dedupedMap.set(item.id, item);
     }
   }
-  // 按 timestamp 排序，保留最新 1000 条 / Sort by timestamp, keep latest 1000
+
+  // 按 timestamp 从最新到最老排序，保留最新 1000 条 / Sort by timestamp from newest to oldest, keep latest 1000
   const deduped = Array.from(dedupedMap.values())
     .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
     .slice(0, 1000);
