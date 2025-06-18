@@ -46,7 +46,6 @@ const fetchIndexUrl = async (): Promise<
   const html = await fetchPageWithUA(INDEX_URL);
   const $ = cheerio.load(html);
   const baseUrl = 'https://muchong.com';
-  const now = Date.now();
   const results: Array<{
     tag: string;
     title: string;
@@ -63,16 +62,27 @@ const fetchIndexUrl = async (): Promise<
       let url = postA.attr('href') || '';
       url = url.startsWith('http') ? url : baseUrl + url;
       const id = crypto.createHash('md5').update(url).digest('hex');
+
+      // 从页面提取时间 / Extract date from the page
+      const dateStr = $(tr).find('td.by em').text().trim();
+      let timestamp = new Date().getTime(); // Fallback
+      if (dateStr) {
+        const parsedDate = new Date(dateStr);
+        if (!isNaN(parsedDate.getTime())) {
+          timestamp = parsedDate.getTime();
+        }
+      }
+
       results.push({
         tag: typeText,
         title,
         url,
         id,
-        timestamp: now,
+        timestamp: timestamp,
       });
     }
   });
-  const dataDirFixed = path.resolve(__dirname, '../../web/assets');
+  const dataDirFixed = path.resolve(__dirname, '../web/assets');
   if (!fs.existsSync(dataDirFixed)) {
     fs.mkdirSync(dataDirFixed, { recursive: true });
   }
@@ -142,20 +152,18 @@ const fetchPostsDetail = async (): Promise<
     timestamp: number;
   }>
 > => {
-  const dataDirFixed = path.resolve(__dirname, '../../web/assets');
+  const dataDirFixed = path.resolve(__dirname, '../web/assets');
   const filePath = path.join(dataDirFixed, 'source.json');
   if (!fs.existsSync(filePath)) {
     throw new Error('source.json not found');
   }
   let posts: Array<any> = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  const now = Date.now();
   const results: Array<{
     id: string;
     url: string;
     detail: any;
     ok: boolean;
     timestamp: number;
-    failed?: boolean;
   }> = [];
 
   const concurrency = 5;
@@ -208,24 +216,22 @@ const fetchPostsDetail = async (): Promise<
             content,
           },
           ok: true,
-          timestamp: now,
         });
       } catch (e) {
         results.push({
           ...post,
           detail: {},
           ok: false,
-          failed: true,
-          timestamp: now,
         });
       }
     }
   }
   const workers = Array.from({ length: concurrency }, () => worker());
   await Promise.all(workers);
-  const filtered = results.filter((item) => item.ok);
-  fs.writeFileSync(filePath, JSON.stringify(filtered, null, 2), 'utf-8');
-  return filtered;
+  // Sort by timestamp from newest to oldest
+  const sorted = results.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  fs.writeFileSync(filePath, JSON.stringify(sorted, null, 2), 'utf-8');
+  return sorted.filter((item) => item.ok);
 };
 
 export { getRandomUserAgent, fetchIndexUrl, fetchPostsDetail, fetchPageWithUA };
