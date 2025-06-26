@@ -6,6 +6,16 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
+type Post = {
+  tag: string;
+  title: string;
+  url: string;
+  id: string;
+  timestamp?: number;
+  detail?: any;
+  ok?: boolean;
+};
+
 const getRandomUserAgent = () => {
   return UA_POOL[Math.floor(Math.random() * UA_POOL.length)];
 };
@@ -32,17 +42,9 @@ const fetchPageWithUA = async (url: string): Promise<string> => {
  * Fetch, parse, and append posts with "招生" in <th class="thread-name"> to Data/source.json
  * 爬取、解析并追加 <th class="thread-name"> 内含"招生"的所有帖子到 Data/source.json，按 id 去重，最大 1000 条
  *
- * @returns Promise<Array<{tag: string, title: string, url: string, id: string}>> 帖子信息数组
+ * @returns Promise<Post[]> 帖子信息数组
  */
-const fetchIndexUrl = async (): Promise<
-  Array<{
-    tag: string;
-    title: string;
-    url: string;
-    id: string;
-    timestamp?: number;
-  }>
-> => {
+const fetchIndexUrl = async (): Promise<Post[]> => {
   const html = await fetchPageWithUA(INDEX_URL);
   const $ = cheerio.load(html);
   const baseUrl = 'https://muchong.com';
@@ -87,13 +89,7 @@ const fetchIndexUrl = async (): Promise<
     fs.mkdirSync(dataDirFixed, { recursive: true });
   }
   const filePath = path.join(dataDirFixed, 'source.json');
-  let existing: Array<{
-    tag: string;
-    title: string;
-    url: string;
-    id: string;
-    timestamp?: number;
-  }> = [];
+  let existing: Post[] = [];
   if (fs.existsSync(filePath)) {
     try {
       existing = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -102,21 +98,18 @@ const fetchIndexUrl = async (): Promise<
     }
   }
   // 将现有数据先放入 Map，实现增量添加 / Put existing data into Map first for incremental addition
-  const dedupedMap = new Map<
-    string,
-    { tag: string; title: string; url: string; id: string; timestamp?: number }
-  >();
+  const dedupedMap = new Map<string, Post>();
 
   // 先添加现有数据 / Add existing data first
   for (const item of existing) {
     dedupedMap.set(item.id, item);
   }
 
-  // 只添加不存在的新数据，跳过已存在的 ID / Only add new data that doesn't exist, skip existing IDs
+  // 用新抓取的数据更新或添加条目 / Add or update entries with newly scraped data
   for (const item of results) {
-    if (!dedupedMap.has(item.id)) {
-      dedupedMap.set(item.id, item);
-    }
+    const existingItem = dedupedMap.get(item.id);
+    // 合并新旧数据，新数据覆盖旧数据，但保留 detail 等字段
+    dedupedMap.set(item.id, { ...existingItem, ...item });
   }
 
   // 按 timestamp 从最新到最老排序，保留最新 1000 条 / Sort by timestamp from newest to oldest, keep latest 1000
